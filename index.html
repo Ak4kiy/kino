@@ -339,6 +339,9 @@ document.addEventListener("pointerdown",()=>{ if(soundOn()) audio(); },{once:tru
 
 /* ---------- хранилище ---------- */
 const KEY="kino-na-den-v1";
+// СБРОС ДАННЫХ У ВСЕХ: поменяй эту строку на любую другую и загрузи index.html на GitHub.
+// При следующем открытии у каждого пользователя всё начнётся с нуля.
+const RESET = "reset-1";
 const $ = s => document.querySelector(s);
 const todayStr = () => { const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
 const fmtDate = s => s ? new Date(s+"T12:00:00").toLocaleDateString("ru-RU") : "";
@@ -347,7 +350,7 @@ const cloudCall=(fn,...a)=>new Promise((res,rej)=>CLOUD[fn](...a,(err,val)=>err?
 
 function slim(f){ const d=DEF[f.id]; if(d&&d.title===f.title&&(f.poster||"")===d.poster) return {id:f.id}; return {id:f.id,title:f.title,year:f.year,genre:f.genre,poster:f.poster||""}; }
 function compact(s){
-  return {v:3,sound:s.sound,
+  return {v:3,reset:RESET,sound:s.sound,
     pool:s.pool.map(f=>{const o=slim(f);return o.title?o:o.id;}),
     watching:s.watching.map(f=>({...slim(f),start:f.start})),
     watched:s.watched.map(f=>{const o={...slim(f),date:f.date,rating:f.rating||0}; if(f.start) o.start=f.start; if(f.review) o.review=f.review; return o;}),
@@ -384,7 +387,8 @@ async function loadState(){
     }catch(e){ console.warn("cloud load",e); }
   }
   if(!raw){ try{ raw=JSON.parse(localStorage.getItem(KEY)); }catch(e){} }
-  const s=(raw&&Array.isArray(raw.pool))?expand(raw):freshState();
+  let s=(raw&&Array.isArray(raw.pool)&&raw.reset===RESET)?expand(raw):freshState();
+  if(raw&&raw.reset!==RESET&&raw.sound===false) s.sound=false;
   if(!s.day||s.day.date!==todayStr()) s.day=newDay();
   return s;
 }
