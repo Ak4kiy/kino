@@ -8,38 +8,41 @@
 <style>
 :root{
   --bg:#0f0f14; --panel:#1a1a23; --panel2:#23232f; --line:#2f2f3d;
-  --text:#f1f1f5; --muted:#9a9aab; --accent:#ffb627; --good:#3ecf8e; --bad:#ff5e5b;
+  --text:#f1f1f5; --muted:#9a9aab; --accent:#ffb627; --good:#3ecf8e; --bad:#ff5e5b; --blue:#5aa9ff;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;min-height:100%}
 body{background:radial-gradient(1200px 600px at 50% -200px,#2a1f3d 0%,var(--bg) 60%) var(--bg);color:var(--text);
   font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;display:flex;flex-direction:column;min-height:100vh}
-header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 20px;border-bottom:1px solid var(--line);background:rgba(15,15,20,.8);backdrop-filter:blur(6px);position:sticky;top:0;z-index:5}
-.logo{font-weight:800;letter-spacing:.5px;font-size:18px;white-space:nowrap}
+header{padding:10px 12px;border-bottom:1px solid var(--line);background:rgba(15,15,20,.85);backdrop-filter:blur(6px);position:sticky;top:0;z-index:5}
+.top{position:relative;text-align:center;margin-bottom:8px}
+.logo{font-weight:800;letter-spacing:.5px;font-size:18px}
 .logo span{color:var(--accent)}
-nav{display:flex;gap:6px}
-nav button{background:transparent;border:1px solid transparent;color:var(--muted);padding:8px 14px;border-radius:10px;font:inherit;font-size:14px;cursor:pointer;white-space:nowrap}
-nav button:hover{color:var(--text);background:var(--panel)}
+.snd{position:absolute;right:0;top:50%;transform:translateY(-50%);background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:10px;width:36px;height:30px;font-size:15px;cursor:pointer}
+nav{display:flex;gap:4px;max-width:700px;margin:0 auto}
+nav button{flex:1;position:relative;background:transparent;border:1px solid transparent;color:var(--muted);padding:8px 4px;border-radius:10px;font:inherit;font-size:13px;cursor:pointer;white-space:nowrap}
 nav button.active{color:var(--text);background:var(--panel2);border-color:var(--line)}
-main{flex:1;width:100%;max-width:900px;margin:0 auto;padding:22px 20px 40px}
+.badge{display:inline-block;min-width:17px;height:17px;line-height:17px;padding:0 5px;margin-left:4px;border-radius:9px;background:var(--blue);color:#06182b;font-size:11px;font-weight:800}
+.badge:empty{display:none}
+main{flex:1;width:100%;max-width:760px;margin:0 auto;padding:16px 12px 40px}
 .view{display:none}.view.active{display:block}
 
 /* постер */
-.poster{position:relative;overflow:hidden;background:var(--g);}
+.poster{position:relative;overflow:hidden;background:var(--g)}
 .poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s}
 .poster img.ok{opacity:1}
 .poster .ini{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;color:rgba(255,255,255,.35)}
 
 /* рулетка */
-.date{color:var(--muted);text-align:center;font-size:14px;margin-bottom:6px}
-h1{text-align:center;margin:0 0 20px;font-size:28px}
-.roulette{position:relative;height:270px;overflow:hidden;border-radius:18px;background:var(--panel);border:1px solid var(--line);
+.date{color:var(--muted);text-align:center;font-size:14px;margin-bottom:4px}
+h1{text-align:center;margin:0 0 16px;font-size:22px}
+.roulette{position:relative;height:220px;overflow:hidden;border-radius:18px;background:var(--panel);border:1px solid var(--line);
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
 .strip{position:absolute;left:0;top:20px;display:flex;gap:12px;will-change:transform}
-.card{flex:0 0 150px;height:225px;border-radius:12px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
-.card .ini{font-size:56px;align-items:flex-start;padding-top:30px}
-.card .cap{position:absolute;left:0;right:0;bottom:0;padding:30px 10px 10px;background:linear-gradient(transparent,rgba(0,0,0,.85));z-index:1}
-.card .t{font-weight:700;font-size:13px;line-height:1.2}
+.card{flex:0 0 120px;height:180px;border-radius:12px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.card .ini{font-size:48px;align-items:flex-start;padding-top:24px}
+.card .cap{position:absolute;left:0;right:0;bottom:0;padding:28px 8px 8px;background:linear-gradient(transparent,rgba(0,0,0,.85));z-index:1}
+.card .t{font-weight:700;font-size:12px;line-height:1.2}
 .card .y{font-size:11px;opacity:.8;margin-top:3px}
 .card.win{box-shadow:0 0 0 3px var(--accent),0 0 30px rgba(255,182,39,.6)}
 .marker{position:absolute;left:50%;top:0;bottom:0;width:0;z-index:2}
@@ -47,104 +50,95 @@ h1{text-align:center;margin:0 0 20px;font-size:28px}
 .marker::before{top:0;border-top-color:var(--accent)}
 .marker::after{bottom:0;border-bottom-color:var(--accent)}
 
-.center{text-align:center;margin-top:26px}
-.big{font:inherit;font-size:30px;font-weight:900;letter-spacing:3px;padding:22px 70px;border:none;border-radius:999px;cursor:pointer;color:#1a1200;
+.center{text-align:center;margin-top:22px}
+.big{font:inherit;font-size:24px;font-weight:900;letter-spacing:3px;padding:18px 54px;border:none;border-radius:999px;cursor:pointer;color:#1a1200;
   background:linear-gradient(135deg,#ffd166,#ffb627 45%,#ff8c42);box-shadow:0 10px 30px rgba(255,140,66,.35),inset 0 -4px 0 rgba(0,0,0,.15);transition:transform .15s,filter .15s}
-.big:hover{transform:translateY(-2px) scale(1.02);filter:brightness(1.05)}
-.big:active{transform:scale(.98)}
+.big:active{transform:scale(.97)}
 .big:disabled{filter:grayscale(1) brightness(.6);cursor:not-allowed;transform:none}
 
-.result{display:none;margin-top:24px}
-.result.show{display:flex;animation:pop .35s ease}
+.panel{display:none;margin-top:20px;gap:18px;align-items:center;flex-direction:column;text-align:center;padding:18px;border-radius:18px;background:var(--panel);border:1px solid var(--line)}
+.panel.show{display:flex;animation:pop .35s ease}
 @keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.result,.done{gap:22px;align-items:center;padding:20px;border-radius:18px;background:var(--panel);border:1px solid var(--line)}
-.bigposter{flex:0 0 auto;width:150px;height:225px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
-.bigposter .ini{font-size:60px}
-.rinfo{flex:1;min-width:0}
+.bigposter{flex:0 0 auto;width:140px;height:210px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.bigposter .ini{font-size:56px}
+.rinfo{width:100%}
 .rinfo .label{color:var(--muted);font-size:14px}
-.rinfo .title{font-size:28px;font-weight:800;margin:4px 0;line-height:1.15}
+.rinfo .title{font-size:24px;font-weight:800;margin:4px 0;line-height:1.15}
 .rinfo .meta{color:var(--muted)}
 .link{display:inline-block;margin-top:8px;color:var(--accent);font-size:14px;text-decoration:none;cursor:pointer}
-.link:hover{text-decoration:underline}
-.actions{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
-.btn{font:inherit;font-size:17px;font-weight:700;padding:13px 30px;border-radius:14px;border:none;cursor:pointer;transition:transform .12s,filter .12s}
-.btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
-.btn:disabled{opacity:.35;cursor:not-allowed;transform:none;filter:none}
+.actions{display:flex;gap:10px;margin-top:16px;justify-content:center}
+.btn{flex:1;max-width:220px;font:inherit;font-size:16px;font-weight:700;padding:13px 10px;border-radius:14px;border:none;cursor:pointer;transition:transform .12s,filter .12s}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
 .btn.watch{background:var(--good);color:#04210f}
 .btn.skip{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
-.hint{color:var(--muted);font-size:13px;margin-top:12px}
-.done{display:none;margin-top:24px}
-.done.show{display:flex}
-.pill{display:inline-block;background:rgba(62,207,142,.15);color:var(--good);padding:4px 12px;border-radius:999px;font-size:13px;font-weight:600}
+.btn.blue{background:var(--blue);color:#06182b}
+.hint{color:var(--muted);font-size:13px;margin-top:10px}
+.pill{display:inline-block;background:rgba(90,169,255,.15);color:var(--blue);padding:4px 12px;border-radius:999px;font-size:13px;font-weight:600}
 
 /* списки */
-.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:16px}
-.toolbar h2{margin:0;font-size:22px}
-.count{color:var(--muted);font-size:14px}
+.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px}
+.toolbar h2{margin:0;font-size:21px}
+.count{color:var(--muted);font-size:13px}
 .list{display:flex;flex-direction:column;gap:10px}
-.item{display:flex;align-items:center;gap:14px;padding:10px 12px;border-radius:14px;background:var(--panel);border:1px solid var(--line)}
+.item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:14px;background:var(--panel);border:1px solid var(--line)}
+.item.top-al{align-items:flex-start}
 .thumb{flex:0 0 54px;height:80px;border-radius:8px;cursor:pointer}
 .thumb .ini{font-size:22px}
 .info{flex:1;min-width:0}
 .info .n{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.info .s{color:var(--muted);font-size:13px;margin-top:2px}
-.stars{display:flex;gap:1px;margin-top:6px;flex-wrap:wrap}
-.star{background:none;border:none;padding:0 1px;font-size:21px;line-height:1;cursor:pointer;color:#45455a;transition:transform .1s,color .1s}
+.info .s{color:var(--muted);font-size:12px;margin-top:2px}
+.stars{display:flex;gap:0;margin-top:5px}
+.star{background:none;border:none;padding:0 1px;font-size:16px;line-height:1;cursor:pointer;color:#45455a}
 .star.on{color:var(--accent)}
-.star:hover{transform:scale(1.2)}
-.score{flex:0 0 auto;font-weight:800;font-size:18px;color:var(--accent);min-width:48px;text-align:right}
-.score.none{color:var(--muted);font-weight:500;font-size:12px}
-.x{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:6px;border-radius:8px}
-.x:hover{color:var(--bad);background:var(--panel2)}
-.empty{color:var(--muted);text-align:center;padding:40px 0}
-select,input{font:inherit;font-size:14px;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px 12px;min-width:0}
-input:focus,select:focus{outline:2px solid var(--accent);outline-offset:-1px}
-.add{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.add input{flex:1 1 160px}
-.add input.yr{flex:0 0 80px}
+.review{margin-top:7px;font-size:13px;line-height:1.35;color:#d6d6e0;background:var(--panel2);border-radius:10px;padding:8px 10px;white-space:pre-wrap;word-wrap:break-word;cursor:pointer}
+.review.empty{color:var(--muted);font-style:italic}
+.score{flex:0 0 auto;font-weight:800;font-size:16px;color:var(--accent);text-align:right}
+.score.none{color:var(--muted);font-weight:500;font-size:11px}
+.x{background:none;border:none;color:var(--muted);font-size:17px;cursor:pointer;padding:6px;border-radius:8px}
+.done-btn{flex:0 0 auto;font:inherit;font-size:13px;font-weight:700;padding:9px 12px;border-radius:10px;border:none;background:var(--good);color:#04210f;cursor:pointer}
+.empty-msg{color:var(--muted);text-align:center;padding:40px 10px}
+select,input,textarea{font:inherit;font-size:14px;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px 12px;min-width:0}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.add{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.add input{flex:1 1 150px}
+.add input.yr{flex:0 0 72px}
 .small{font:inherit;font-size:14px;font-weight:600;padding:9px 16px;border-radius:10px;border:none;cursor:pointer;background:var(--accent);color:#1a1200}
 .small.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
-.footer-tools{display:flex;gap:8px;justify-content:center;margin-top:30px;flex-wrap:wrap}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--panel2);border:1px solid var(--line);padding:12px 20px;border-radius:12px;transition:transform .25s;z-index:30;max-width:90vw;text-align:center}
+.small:disabled{opacity:.4;cursor:not-allowed}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(140px);background:var(--panel2);border:1px solid var(--line);padding:12px 20px;border-radius:12px;transition:transform .25s;z-index:40;max-width:90vw;text-align:center}
 .toast.show{transform:translateX(-50%) translateY(0)}
 
-/* модалка постера */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
+/* модалки */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:20;padding:14px}
 .modal.show{display:flex}
-.mbox{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;width:100%;max-width:440px}
-.mbox h3{margin:0 0 4px}
+.mbox{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;width:100%;max-width:420px;animation:pop .25s ease}
+.mbox h3{margin:0 0 4px;font-size:19px}
 .mrow{display:flex;gap:14px;margin:14px 0}
-.mrow .bigposter{width:110px;height:165px}
+.mrow .bigposter{width:100px;height:150px}
 .mcol{flex:1;display:flex;flex-direction:column;gap:8px;min-width:0}
 .mcol input{width:100%}
-.mfoot{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
-
-@media (max-width:600px){
-  header{flex-direction:column;align-items:stretch;padding:10px 12px}
-  .logo{text-align:center}
-  nav{justify-content:center}
-  nav button{flex:1;padding:8px 6px;font-size:13px}
-  main{padding:16px 12px 30px}
-  h1{font-size:22px}
-  .card{flex-basis:120px;height:180px}
-  .roulette{height:220px}
-  .big{font-size:24px;padding:18px 50px}
-  .result,.done{flex-direction:column;text-align:center}
-  .actions{justify-content:center}
-  .btn{flex:1;padding:13px 10px}
-  .score{min-width:36px;font-size:15px}
-  .star{font-size:15px;padding:0}
-  .item{gap:10px}
-}
+.mfoot{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:14px}
+.rate-head{display:flex;gap:12px;align-items:center}
+.rate-head .bigposter{width:60px;height:90px;border-radius:8px;flex:0 0 auto}
+.rate-head .bigposter .ini{font-size:26px}
+.bigstars{display:flex;justify-content:center;gap:2px;margin:18px 0 6px}
+.bigstars .star{font-size:28px;padding:0 1px}
+.rate-val{text-align:center;color:var(--muted);font-size:14px;min-height:20px}
+.rate-val b{color:var(--accent);font-size:18px}
+textarea{width:100%;min-height:120px;resize:vertical;margin-top:12px;line-height:1.4}
+.chars{text-align:right;color:var(--muted);font-size:12px;margin-top:4px}
+@media (max-width:370px){ .bigstars .star{font-size:24px} nav button{font-size:12px} }
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">🎬 Кино <span>на день</span></div>
+  <div class="top"><div class="logo">🎬 Кино <span>на день</span></div><button class="snd" id="sndBtn" title="Звук">🔊</button></div>
   <nav>
     <button data-view="spin" class="active">Рулетка</button>
+    <button data-view="watching">Смотрю<span class="badge" id="wgBadge"></span></button>
     <button data-view="watched">Просмотрено</button>
-    <button data-view="pool">Все фильмы</button>
+    <button data-view="pool">Фильмы</button>
   </nav>
 </header>
 
@@ -156,7 +150,7 @@ input:focus,select:focus{outline:2px solid var(--accent);outline-offset:-1px}
 
     <div class="center" id="spinWrap"><button class="big" id="spinBtn">КРУТИТЬ</button></div>
 
-    <div class="result" id="result">
+    <div class="panel" id="result">
       <div class="bigposter poster" id="rPoster"></div>
       <div class="rinfo">
         <div class="label">Выпал фильм</div>
@@ -171,16 +165,22 @@ input:focus,select:focus{outline:2px solid var(--accent);outline-offset:-1px}
       </div>
     </div>
 
-    <div class="done" id="done">
+    <div class="panel" id="done">
       <div class="bigposter poster" id="dPoster"></div>
       <div class="rinfo">
-        <span class="pill">Фильм на сегодня выбран</span>
+        <span class="pill">Добавлен в «Смотрю»</span>
         <div class="title" id="dTitle"></div>
         <div class="meta" id="dMeta"></div>
         <a class="link" id="dSearch">Найти на Кинопоиске ↗</a>
+        <div class="actions"><button class="btn blue" id="goWatching">Открыть «Смотрю»</button></div>
         <div class="hint">Приятного просмотра! Новая прокрутка — завтра.</div>
       </div>
     </div>
+  </section>
+
+  <section id="watching" class="view">
+    <div class="toolbar"><div><h2>Смотрю</h2><div class="count" id="wgCount"></div></div></div>
+    <div class="list" id="wgList"></div>
   </section>
 
   <section id="watched" class="view">
@@ -203,19 +203,15 @@ input:focus,select:focus{outline:2px solid var(--accent);outline-offset:-1px}
     <div class="add">
       <input id="addTitle" placeholder="Название фильма">
       <input id="addYear" class="yr" placeholder="Год" inputmode="numeric">
-      <input id="addGenre" placeholder="Жанр" style="flex:0 1 140px">
+      <input id="addGenre" placeholder="Жанр" style="flex:0 1 120px">
       <button class="small" id="addBtn">Добавить</button>
     </div>
-    <div class="hint" style="margin:-6px 0 14px">Постер для нового фильма подтянется сам. Нажми на постер, чтобы поменять его.</div>
+    <div class="hint" style="margin:-4px 0 12px">Постер нового фильма подтянется сам. Нажми на постер, чтобы поменять его.</div>
     <div class="list" id="pList"></div>
-    <div class="footer-tools" id="backupTools">
-      <button class="small ghost" id="exportBtn">Сохранить резервную копию</button>
-      <button class="small ghost" id="importBtn">Загрузить копию</button>
-      <input type="file" id="importFile" accept=".json" hidden>
-    </div>
   </section>
 </main>
 
+<!-- модалка постера -->
 <div class="modal" id="modal">
   <div class="mbox">
     <h3 id="mTitle"></h3>
@@ -231,6 +227,33 @@ input:focus,select:focus{outline:2px solid var(--accent);outline-offset:-1px}
     <div class="mfoot">
       <button class="small ghost" id="mCancel">Отмена</button>
       <button class="small" id="mSave">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<!-- модалка оценки и отзыва -->
+<div class="modal" id="rateModal">
+  <div class="mbox">
+    <div class="rate-head">
+      <div class="bigposter poster" id="rtPoster"></div>
+      <div><h3 id="rtTitle"></h3><div class="count" id="rtSub"></div></div>
+    </div>
+    <div id="step1">
+      <div class="bigstars" id="rtStars"></div>
+      <div class="rate-val" id="rtVal">Выбери от 1 до 10 звёзд</div>
+      <div class="mfoot">
+        <button class="small ghost" id="rtCancel">Отмена</button>
+        <button class="small" id="rtRate" disabled>Оценить</button>
+      </div>
+    </div>
+    <div id="step2" style="display:none">
+      <div class="rate-val" id="rtVal2"></div>
+      <textarea id="rtText" maxlength="1000" placeholder="Что понравилось, что нет, кому посоветуешь…"></textarea>
+      <div class="chars" id="rtChars">0 / 1000</div>
+      <div class="mfoot">
+        <button class="small ghost" id="rtSkip">Без отзыва</button>
+        <button class="small" id="rtSave">Сохранить</button>
+      </div>
     </div>
   </div>
 </div>
@@ -274,62 +297,95 @@ const DEFAULT_FILMS = [
 ["Пятый элемент",1997,"фантастика"],["Трудности перевода",2003,"драма"]
 ];
 const POSTERS = {"Побег из Шоушенка":"https://upload.wikimedia.org/wikipedia/ru/d/de/Movie_poster_the_shawshank_redemption.jpg","Зелёная миля":"https://upload.wikimedia.org/wikipedia/ru/b/b0/Green_mile_film.jpg","Форрест Гамп":"https://upload.wikimedia.org/wikipedia/ru/d/de/%D0%A4%D0%BE%D1%80%D1%80%D0%B5%D1%81%D1%82_%D0%93%D0%B0%D0%BC%D0%BF.jpg","Список Шиндлера":"https://upload.wikimedia.org/wikipedia/ru/3/38/Schindler%27s_List_movie.jpg","Интерстеллар":"https://upload.wikimedia.org/wikipedia/ru/c/c3/Interstellar_2014.jpg","Начало":"https://upload.wikimedia.org/wikipedia/ru/b/bc/Poster_Inception_film_2010.jpg","Тёмный рыцарь":"https://thumb.wikimedia.org/wikipedia/ru/thumb/f/f4/%D0%A2%D1%91%D0%BC%D0%BD%D1%8B%D0%B9_%D1%80%D1%8B%D1%86%D0%B0%D1%80%D1%8C_%282008%29_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg/500px-%D0%A2%D1%91%D0%BC%D0%BD%D1%8B%D0%B9_%D1%80%D1%8B%D1%86%D0%B0%D1%80%D1%8C_%282008%29_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg","Престиж":"https://upload.wikimedia.org/wikipedia/ru/a/a0/Prestige10.jpg","Бойцовский клуб":"https://thumb.wikimedia.org/wikipedia/ru/thumb/8/8a/Fight_club.jpg/500px-Fight_club.jpg","Криминальное чтиво":"https://upload.wikimedia.org/wikipedia/ru/9/93/Pulp_Fiction.jpg","Матрица":"https://thumb.wikimedia.org/wikipedia/ru/thumb/9/9d/Matrix-DVD.jpg/500px-Matrix-DVD.jpg","Властелин колец: Братство кольца":"https://thumb.wikimedia.org/wikipedia/ru/thumb/0/08/The_Lord_of_the_Rings._The_Fellowship_of_the_Ring_%E2%80%94_movie.jpg/500px-The_Lord_of_the_Rings._The_Fellowship_of_the_Ring_%E2%80%94_movie.jpg","Властелин колец: Две крепости":"https://thumb.wikimedia.org/wikipedia/ru/thumb/f/f0/The_Lord_of_the_Rings._The_Two_Towers_%E2%80%94_movie.jpg/500px-The_Lord_of_the_Rings._The_Two_Towers_%E2%80%94_movie.jpg","Властелин колец: Возвращение короля":"https://thumb.wikimedia.org/wikipedia/ru/thumb/5/53/The_Lord_of_the_Rings._The_Return_of_the_King_%E2%80%94_movie.jpg/500px-The_Lord_of_the_Rings._The_Return_of_the_King_%E2%80%94_movie.jpg","Король Лев":"https://upload.wikimedia.org/wikipedia/ru/6/62/Lion_king_ver1.jpg","Унесённые призраками":"https://thumb.wikimedia.org/wikipedia/ru/thumb/6/61/Spirited_away.jpg/500px-Spirited_away.jpg","Мой сосед Тоторо":"https://thumb.wikimedia.org/wikipedia/ru/thumb/a/ab/%D0%9C%D0%BE%D0%B9_%D1%81%D0%BE%D1%81%D0%B5%D0%B4_%D0%A2%D0%BE%D1%82%D0%BE%D1%80%D0%BE.jpg/500px-%D0%9C%D0%BE%D0%B9_%D1%81%D0%BE%D1%81%D0%B5%D0%B4_%D0%A2%D0%BE%D1%82%D0%BE%D1%80%D0%BE.jpg","Ходячий замок":"https://thumb.wikimedia.org/wikipedia/ru/thumb/f/f3/%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D0%B0%D0%BD%D0%B8%D0%BC%D0%B0%D0%BD%D0%B3%D0%B8_%C2%AB%D0%A5%D0%BE%D0%B4%D1%8F%D1%87%D0%B8%D0%B9_%D0%B7%D0%B0%D0%BC%D0%BE%D0%BA%C2%BB.jpg/500px-%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D0%B0%D0%BD%D0%B8%D0%BC%D0%B0%D0%BD%D0%B3%D0%B8_%C2%AB%D0%A5%D0%BE%D0%B4%D1%8F%D1%87%D0%B8%D0%B9_%D0%B7%D0%B0%D0%BC%D0%BE%D0%BA%C2%BB.jpg","Достучаться до небес":"https://upload.wikimedia.org/wikipedia/ru/b/b9/Knockin%27_On_Heaven%27s_Door.jpg","1+1":"https://upload.wikimedia.org/wikipedia/ru/b/b9/Intouchables.jpg","Леон":"https://upload.wikimedia.org/wikipedia/ru/e/e1/L%C3%A9on_poster.JPG","Иван Васильевич меняет профессию":"https://thumb.wikimedia.org/wikipedia/ru/thumb/c/c4/%D0%98%D0%B2%D0%B0%D0%BD_%D0%92%D0%B0%D1%81%D0%B8%D0%BB%D1%8C%D0%B5%D0%B2%D0%B8%D1%87_%D0%BC%D0%B5%D0%BD%D1%8F%D0%B5%D1%82_%D0%BF%D1%80%D0%BE%D1%84%D0%B5%D1%81%D1%81%D0%B8%D1%8E_%28%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80%29.jpg/500px-%D0%98%D0%B2%D0%B0%D0%BD_%D0%92%D0%B0%D1%81%D0%B8%D0%BB%D1%8C%D0%B5%D0%B2%D0%B8%D1%87_%D0%BC%D0%B5%D0%BD%D1%8F%D0%B5%D1%82_%D0%BF%D1%80%D0%BE%D1%84%D0%B5%D1%81%D1%81%D0%B8%D1%8E_%28%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80%29.jpg","Брат":"https://upload.wikimedia.org/wikipedia/ru/0/08/%D0%91%D1%80%D0%B0%D1%82_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg","Джентльмены удачи":"https://thumb.wikimedia.org/wikipedia/ru/thumb/9/93/1972_dzhentlmeny_udachi.jpg/500px-1972_dzhentlmeny_udachi.jpg","Операция «Ы» и другие приключения Шурика":"https://thumb.wikimedia.org/wikipedia/ru/thumb/b/ba/%D0%9E%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F_%D0%AB_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC_%D0%BF%D0%BB%D0%B0%D0%BA%D0%B0%D1%82.jpeg/500px-%D0%9E%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F_%D0%AB_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC_%D0%BF%D0%BB%D0%B0%D0%BA%D0%B0%D1%82.jpeg","Москва слезам не верит":"https://thumb.wikimedia.org/wikipedia/ru/thumb/0/0c/%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0_%D1%81%D0%BB%D0%B5%D0%B7%D0%B0%D0%BC_%D0%BD%D0%B5_%D0%B2%D0%B5%D1%80%D0%B8%D1%82.jpg/500px-%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0_%D1%81%D0%BB%D0%B5%D0%B7%D0%B0%D0%BC_%D0%BD%D0%B5_%D0%B2%D0%B5%D1%80%D0%B8%D1%82.jpg","Назад в будущее":"https://upload.wikimedia.org/wikipedia/ru/9/90/BTTF_DVD_rus.jpg","Терминатор 2: Судный день":"https://upload.wikimedia.org/wikipedia/ru/f/f2/%D0%A2%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%B0%D1%82%D0%BE%D1%80_2_-_%D0%A1%D1%83%D0%B4%D0%BD%D1%8B%D0%B9_%D0%B4%D0%B5%D0%BD%D1%8C.webp","Чужой":"https://thumb.wikimedia.org/wikipedia/ru/thumb/c/c3/Alien_movie_poster.jpg/500px-Alien_movie_poster.jpg","Нечто":"https://thumb.wikimedia.org/wikipedia/ru/thumb/c/c0/The_thing.jpg/500px-The_thing.jpg","Сияние":"https://upload.wikimedia.org/wikipedia/ru/e/ef/The_Shining.jpg","Молчание ягнят":"https://upload.wikimedia.org/wikipedia/ru/9/95/The_Silence_Of_The_Lambs.jpg","Семь":"https://upload.wikimedia.org/wikipedia/ru/8/83/Se7en_%28poster%29.jpg","Остров проклятых":"https://upload.wikimedia.org/wikipedia/ru/2/22/Kinopoisk.ru-Shutter-Island-1094940.jpg","Отступники":"https://upload.wikimedia.org/wikipedia/ru/e/ed/%D0%9E%D1%82%D1%81%D1%82%D1%83%D0%BF%D0%BD%D0%B8%D0%BA%D0%B8_%28%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80%29.jpg","Крёстный отец":"https://upload.wikimedia.org/wikipedia/ru/c/c4/Godfather_vhs.jpg","Славные парни":"https://upload.wikimedia.org/wikipedia/ru/9/99/Goodfellas_Cover.jpg","Гладиатор":"https://upload.wikimedia.org/wikipedia/ru/f/fe/Gladiatorteaser.jpg","Храброе сердце":"https://thumb.wikimedia.org/wikipedia/ru/thumb/5/55/Braveheart_imp.jpg/500px-Braveheart_imp.jpg","Спасти рядового Райана":"https://upload.wikimedia.org/wikipedia/ru/1/1c/%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%D0%A1%D0%BF%D0%B0%D1%81%D1%82%D0%B8_%D1%80%D1%8F%D0%B4%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE_%D0%A0%D0%B0%D0%B9%D0%B0%D0%BD%D0%B0.jpg","Иллюзия обмана":"https://upload.wikimedia.org/wikipedia/ru/6/6d/%D0%98%D0%BB%D0%BB%D1%8E%D0%B7%D0%B8%D1%8F_%D0%BE%D0%B1%D0%BC%D0%B0%D0%BD%D0%B0_%28%D0%BE%D0%B1%D0%BB%D0%BE%D0%B6%D0%BA%D0%B0_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0%29.jpg","Достать ножи":"https://thumb.wikimedia.org/wikipedia/ru/thumb/8/83/Knives_Out_%28film%29.jpg/500px-Knives_Out_%28film%29.jpg","Паразиты":"https://upload.wikimedia.org/wikipedia/ru/7/77/%D0%A4%D0%B8%D0%BB%D1%8C%D0%BC_%D0%9F%D0%B0%D1%80%D0%B0%D0%B7%D0%B8%D1%82%D1%8B_%28Gisaengchung%29.png","Джанго освобождённый":"https://upload.wikimedia.org/wikipedia/ru/b/ba/Django_Unchained.jpg","Бесславные ублюдки":"https://upload.wikimedia.org/wikipedia/ru/c/c3/Inglourious_Basterds_poster.jpg","Хороший, плохой, злой":"https://upload.wikimedia.org/wikipedia/ru/f/fd/Goodbadugly.JPG","Безумный Макс: Дорога ярости":"https://upload.wikimedia.org/wikipedia/ru/6/6e/Mad_Max_Fury_Road.jpg","Бегущий по лезвию 2049":"https://upload.wikimedia.org/wikipedia/ru/9/9b/%D0%91%D0%B5%D0%B3%D1%83%D1%89%D0%B8%D0%B9_%D0%BF%D0%BE_%D0%BB%D0%B5%D0%B7%D0%B2%D0%B8%D1%8E_2049.jpg","Дюна":"https://thumb.wikimedia.org/wikipedia/ru/thumb/f/f1/%D0%94%D1%8E%D0%BD%D0%B0_%D0%BE%D1%84%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg/500px-%D0%94%D1%8E%D0%BD%D0%B0_%D0%BE%D1%84%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg","Прибытие":"https://thumb.wikimedia.org/wikipedia/ru/thumb/5/5c/Arrival_poster.jpg/500px-Arrival_poster.jpg","Марсианин":"https://upload.wikimedia.org/wikipedia/ru/6/67/The_Martian.jpg","Гравитация":"https://thumb.wikimedia.org/wikipedia/ru/thumb/5/5e/Gravity_poster.jpg/500px-Gravity_poster.jpg","Одержимость":"https://thumb.wikimedia.org/wikipedia/ru/thumb/0/01/Whiplash_poster.jpg/500px-Whiplash_poster.jpg","Ла-Ла Ленд":"https://upload.wikimedia.org/wikipedia/ru/8/84/%D0%9B%D0%B0-%D0%9B%D0%B0_%D0%9B%D0%B5%D0%BD%D0%B4_%28%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0%29.jpg","Отель «Гранд Будапешт»":"https://thumb.wikimedia.org/wikipedia/ru/thumb/f/f5/The_Grand_Budapest_Hotel.jpg/500px-The_Grand_Budapest_Hotel.jpg","Волк с Уолл-стрит":"https://upload.wikimedia.org/wikipedia/ru/7/72/%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%C2%AB%D0%92%D0%BE%D0%BB%D0%BA_%D1%81_%D0%A3%D0%BE%D0%BB%D0%BB-%D1%81%D1%82%D1%80%D0%B8%D1%82%C2%BB.jpg","Поймай меня, если сможешь":"https://upload.wikimedia.org/wikipedia/ru/7/7c/Catch_Me_if_You_Can_%282002%29.jpg","Шоу Трумана":"https://upload.wikimedia.org/wikipedia/ru/c/cd/Trumanshow.jpg","Вечное сияние чистого разума":"https://thumb.wikimedia.org/wikipedia/ru/thumb/a/af/Eternal_Sunshine_of_the_Spotless_Mind.jpg/500px-Eternal_Sunshine_of_the_Spotless_Mind.jpg","Помни":"https://upload.wikimedia.org/wikipedia/ru/c/c7/Memento_poster.jpg","Пианист":"https://upload.wikimedia.org/wikipedia/ru/a/a6/The_Pianist_movie.jpg","Жизнь прекрасна":"https://upload.wikimedia.org/wikipedia/ru/1/1d/%D0%96%D0%B8%D0%B7%D0%BD%D1%8C_%D0%BF%D1%80%D0%B5%D0%BA%D1%80%D0%B0%D1%81%D0%BD%D0%B0_%28%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80%29.jpg","Амели":"https://upload.wikimedia.org/wikipedia/ru/9/9b/Amelie_DVD_box.jpg","Хатико: Самый верный друг":"https://upload.wikimedia.org/wikipedia/ru/e/e3/%D0%A5%D0%B0%D1%82%D0%B8%D0%BA%D0%BE-%D1%84%D0%B8%D0%BB%D1%8C%D0%BC.jpg","Зелёная книга":"https://upload.wikimedia.org/wikipedia/ru/f/f0/Green_Book.jpg","Гарри Поттер и философский камень":"https://thumb.wikimedia.org/wikipedia/ru/thumb/b/b4/Harry_Potter_and_the_Philosopher%27s_Stone_%E2%80%94_movie.jpg/500px-Harry_Potter_and_the_Philosopher%27s_Stone_%E2%80%94_movie.jpg","Пираты Карибского моря: Проклятие Чёрной жемчужины":"https://upload.wikimedia.org/wikipedia/ru/7/79/Pirates-of-the-Caribbean-The-Curse-of-the-Black-Pearl-.jpg","Парк Юрского периода":"https://thumb.wikimedia.org/wikipedia/ru/thumb/e/e7/Jurassic_Park_poster.jpg/500px-Jurassic_Park_poster.jpg","Индиана Джонс: В поисках утраченного ковчега":"https://upload.wikimedia.org/wikipedia/ru/7/79/Indiana-jones-raiders-of-lost-ark-poster.jpg","Звёздные войны: Империя наносит ответный удар":"https://upload.wikimedia.org/wikipedia/ru/e/e0/Empire20strikes20back_old.jpg","Мстители: Финал":"https://thumb.wikimedia.org/wikipedia/ru/thumb/0/0d/Avengers_Endgame_poster.jpg/500px-Avengers_Endgame_poster.jpg","Человек-паук: Через вселенные":"https://thumb.wikimedia.org/wikipedia/ru/thumb/2/2c/Spider-Man_-_Into_the_Spider-Verse.jpg/500px-Spider-Man_-_Into_the_Spider-Verse.jpg","ВАЛЛ·И":"https://upload.wikimedia.org/wikipedia/ru/c/c4/WALL-E_poster.png","Вверх":"https://thumb.wikimedia.org/wikipedia/ru/thumb/4/40/Up%28poster%29.jpg/500px-Up%28poster%29.jpg","Головоломка":"https://upload.wikimedia.org/wikipedia/ru/1/18/%D0%93%D0%BE%D0%BB%D0%BE%D0%B2%D0%BE%D0%BB%D0%BE%D0%BC%D0%BA%D0%B0_2015.jpg","Тайна Коко":"https://upload.wikimedia.org/wikipedia/ru/d/d7/Coco_%282017_film%29_logo.jpg","История игрушек":"https://thumb.wikimedia.org/wikipedia/ru/thumb/a/a6/Toy_Story_1995_Poster.jpg/500px-Toy_Story_1995_Poster.jpg","Шрек":"https://thumb.wikimedia.org/wikipedia/ru/thumb/3/39/Shrek.jpg/500px-Shrek.jpg","Как приручить дракона":"https://upload.wikimedia.org/wikipedia/ru/a/a3/How_to_Train_Your_Dragon.jpg","Пила: Игра на выживание":"https://thumb.wikimedia.org/wikipedia/ru/thumb/7/78/%D0%9F%D0%B8%D0%BB%D0%B0_%D0%98%D0%B3%D1%80%D0%B0_%D0%BD%D0%B0_%D0%B2%D1%8B%D0%B6%D0%B8%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5.jpg/500px-%D0%9F%D0%B8%D0%BB%D0%B0_%D0%98%D0%B3%D1%80%D0%B0_%D0%BD%D0%B0_%D0%B2%D1%8B%D0%B6%D0%B8%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5.jpg","Оно":"https://thumb.wikimedia.org/wikipedia/ru/thumb/f/ff/%D0%9E%D0%BD%D0%BE_%28%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0%2C_2017%29.jpg/500px-%D0%9E%D0%BD%D0%BE_%28%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0%2C_2017%29.jpg","Заклятие":"https://upload.wikimedia.org/wikipedia/ru/9/9b/%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%C2%AB%D0%97%D0%B0%D0%BA%D0%BB%D1%8F%D1%82%D0%B8%D0%B5%C2%BB.jpg","Прочь":"https://thumb.wikimedia.org/wikipedia/ru/thumb/4/4e/%D0%9F%D1%80%D0%BE%D1%87%D1%8C_2017.jpg/500px-%D0%9F%D1%80%D0%BE%D1%87%D1%8C_2017.jpg","Однажды в… Голливуде":"https://upload.wikimedia.org/wikipedia/ru/e/ef/Once_Upon_a_Time_in_Hollywood_cover.png","Джокер":"https://thumb.wikimedia.org/wikipedia/ru/thumb/6/6f/%D0%94%D0%B6%D0%BE%D0%BA%D0%B5%D1%80_%28%D1%84%D0%B8%D0%BB%D1%8C%D0%BC_%D0%A2%D0%BE%D0%B4%D0%B4%D0%B0_%D0%A4%D0%B8%D0%BB%D0%BB%D0%B8%D0%BF%D1%81%D0%B0%29.jpg/500px-%D0%94%D0%B6%D0%BE%D0%BA%D0%B5%D1%80_%28%D1%84%D0%B8%D0%BB%D1%8C%D0%BC_%D0%A2%D0%BE%D0%B4%D0%B4%D0%B0_%D0%A4%D0%B8%D0%BB%D0%BB%D0%B8%D0%BF%D1%81%D0%B0%29.jpg","Оппенгеймер":"https://thumb.wikimedia.org/wikipedia/ru/thumb/b/bf/%D0%9E%D0%BF%D0%BF%D0%B5%D0%BD%D0%B3%D0%B5%D0%B9%D0%BC%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg/500px-%D0%9E%D0%BF%D0%BF%D0%B5%D0%BD%D0%B3%D0%B5%D0%B9%D0%BC%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC_%D0%BF%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg","Топ Ган: Мэверик":"https://thumb.wikimedia.org/wikipedia/ru/thumb/7/7d/Top_Gun-_Maverick.jpg/500px-Top_Gun-_Maverick.jpg","Всё везде и сразу":"https://thumb.wikimedia.org/wikipedia/ru/thumb/f/fb/%D0%92%D1%81%D1%91%D0%B2%D0%B5%D0%B7%D0%B4%D0%B5%D0%B8%D1%81%D1%80%D0%B0%D0%B7%D1%83.jpg/500px-%D0%92%D1%81%D1%91%D0%B2%D0%B5%D0%B7%D0%B4%D0%B5%D0%B8%D1%81%D1%80%D0%B0%D0%B7%D1%83.jpg","Ford против Ferrari":"https://thumb.wikimedia.org/wikipedia/ru/thumb/e/ee/%D0%A4%D0%BE%D1%80%D0%B4_%D0%BF%D1%80%D0%BE%D1%82%D0%B8%D0%B2_%D0%A4%D0%B5%D1%80%D1%80%D0%B0%D1%80%D0%B8.jpg/500px-%D0%A4%D0%BE%D1%80%D0%B4_%D0%BF%D1%80%D0%BE%D1%82%D0%B8%D0%B2_%D0%A4%D0%B5%D1%80%D1%80%D0%B0%D1%80%D0%B8.jpg","Довод":"https://thumb.wikimedia.org/wikipedia/ru/thumb/5/56/Tenet_%28poster%29.jpg/500px-Tenet_%28poster%29.jpg","Дэдпул":"https://thumb.wikimedia.org/wikipedia/ru/thumb/b/b2/Deadpool_film.jpg/500px-Deadpool_film.jpg","Стражи Галактики":"https://thumb.wikimedia.org/wikipedia/ru/thumb/a/a7/Guardians_of_the_Galaxy_film.jpg/500px-Guardians_of_the_Galaxy_film.jpg","Зодиак":"https://upload.wikimedia.org/wikipedia/ru/6/69/Zodiac_poster.jpg","Исчезнувшая":"https://thumb.wikimedia.org/wikipedia/ru/thumb/1/1e/Gone_Girl_poster.jpg/500px-Gone_Girl_poster.jpg","Пленницы":"https://upload.wikimedia.org/wikipedia/ru/f/f7/Prisoners_poster.jpg","Олдбой":"https://thumb.wikimedia.org/wikipedia/ru/thumb/8/8c/%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%C2%AB%D0%9E%D0%BB%D0%B4%D0%B1%D0%BE%D0%B9%C2%BB_%282003%29.jpg/500px-%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%C2%AB%D0%9E%D0%BB%D0%B4%D0%B1%D0%BE%D0%B9%C2%BB_%282003%29.jpg","Сталкер":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/%D0%A1%D1%82%D0%B0%D0%BB%D0%BA%D0%B5%D1%80_logo.png/500px-%D0%A1%D1%82%D0%B0%D0%BB%D0%BA%D0%B5%D1%80_logo.png","Солярис":"https://upload.wikimedia.org/wikipedia/ru/3/33/%D0%A1%D0%BE%D0%BB%D1%8F%D1%80%D0%B8%D1%81_%28%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%2C_1972%29_%D0%BF%D0%BB%D0%B0%D0%BA%D0%B0%D1%82.jpg","Белое солнце пустыни":"https://thumb.wikimedia.org/wikipedia/ru/thumb/4/40/1970_beloe_solntse_pustyni.jpg/500px-1970_beloe_solntse_pustyni.jpg","Ирония судьбы, или С лёгким паром!":"https://thumb.wikimedia.org/wikipedia/ru/thumb/f/fe/%D0%98%D1%80%D0%BE%D0%BD%D0%B8%D1%8F_%D1%81%D1%83%D0%B4%D1%8C%D0%B1%D1%8B%2C_%D0%B8%D0%BB%D0%B8_%D0%A1_%D0%BB%D1%91%D0%B3%D0%BA%D0%B8%D0%BC_%D0%BF%D0%B0%D1%80%D0%BE%D0%BC%21.jpg/500px-%D0%98%D1%80%D0%BE%D0%BD%D0%B8%D1%8F_%D1%81%D1%83%D0%B4%D1%8C%D0%B1%D1%8B%2C_%D0%B8%D0%BB%D0%B8_%D0%A1_%D0%BB%D1%91%D0%B3%D0%BA%D0%B8%D0%BC_%D0%BF%D0%B0%D1%80%D0%BE%D0%BC%21.jpg","Легенда №17":"https://upload.wikimedia.org/wikipedia/ru/a/a0/%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%C2%AB%D0%9B%D0%B5%D0%B3%D0%B5%D0%BD%D0%B4%D0%B0_%E2%84%9617%C2%BB.jpg","Движение вверх":"https://upload.wikimedia.org/wikipedia/ru/b/b1/%D0%94%D0%B2%D0%B8%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B2%D0%B2%D0%B5%D1%80%D1%85_%282017%29.jpg","Тот самый Мюнхгаузен":"https://thumb.wikimedia.org/wikipedia/ru/thumb/d/d2/%D0%A2%D0%BE%D1%82_%D1%81%D0%B0%D0%BC%D1%8B%D0%B9_%D0%9C%D1%8E%D0%BD%D1%85%D0%B3%D0%B0%D1%83%D0%B7%D0%B5%D0%BD_%28%D0%BE%D0%B1%D0%BB%D0%BE%D0%B6%D0%BA%D0%B0_DVD%29.jpg/500px-%D0%A2%D0%BE%D1%82_%D1%81%D0%B0%D0%BC%D1%8B%D0%B9_%D0%9C%D1%8E%D0%BD%D1%85%D0%B3%D0%B0%D1%83%D0%B7%D0%B5%D0%BD_%28%D0%BE%D0%B1%D0%BB%D0%BE%D0%B6%D0%BA%D0%B0_DVD%29.jpg","Кин-дза-дза!":"https://upload.wikimedia.org/wikipedia/ru/0/0e/%D0%9A%D0%B8%D0%BD-%D0%B4%D0%B7%D0%B0-%D0%B4%D0%B7%D0%B0%21.jpg","Собачье сердце":"https://thumb.wikimedia.org/wikipedia/ru/thumb/5/51/%D0%A1%D0%BE%D0%B1%D0%B0%D1%87%D1%8C%D0%B5_%D1%81%D0%B5%D1%80%D0%B4%D1%86%D0%B5_%28%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%2C_1988%29.jpg/500px-%D0%A1%D0%BE%D0%B1%D0%B0%D1%87%D1%8C%D0%B5_%D1%81%D0%B5%D1%80%D0%B4%D1%86%D0%B5_%28%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%2C_1988%29.jpg","Бриллиантовая рука":"https://thumb.wikimedia.org/wikipedia/ru/thumb/1/17/%D0%91%D1%80%D0%B8%D0%BB%D0%BB%D0%B8%D0%B0%D0%BD%D1%82%D0%BE%D0%B2%D0%B0%D1%8F_%D1%80%D1%83%D0%BA%D0%B0_Poster.jpg/500px-%D0%91%D1%80%D0%B8%D0%BB%D0%BB%D0%B8%D0%B0%D0%BD%D1%82%D0%BE%D0%B2%D0%B0%D1%8F_%D1%80%D1%83%D0%BA%D0%B0_Poster.jpg","Большой куш":"https://thumb.wikimedia.org/wikipedia/ru/thumb/b/b1/Snatch_Movie_Poster.jpg/500px-Snatch_Movie_Poster.jpg","Карты, деньги, два ствола":"https://upload.wikimedia.org/wikipedia/ru/6/61/Lock_Stock_and_Two_Smoking_Barrels_Poster.jpg","Типа крутые легавые":"https://upload.wikimedia.org/wikipedia/ru/6/6f/Hot_Fuzz.jpg","Мальчишник в Вегасе":"https://upload.wikimedia.org/wikipedia/ru/c/cd/The_Hangover.jpg","Один дома":"https://thumb.wikimedia.org/wikipedia/ru/thumb/0/03/Home_Alone_dvd_rus.jpg/500px-Home_Alone_dvd_rus.jpg","Титаник":"https://thumb.wikimedia.org/wikipedia/ru/thumb/1/19/Titanic_%28Official_Film_Poster%29.png/500px-Titanic_%28Official_Film_Poster%29.png","Аватар":"https://thumb.wikimedia.org/wikipedia/ru/thumb/4/4b/Avatar-2009.jpg/500px-Avatar-2009.jpg","Пятый элемент":"https://thumb.wikimedia.org/wikipedia/ru/thumb/a/a7/%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%22%D0%9F%D1%8F%D1%82%D1%8B%D0%B9_%D1%8D%D0%BB%D0%B5%D0%BC%D0%B5%D0%BD%D1%82%22.jpg/500px-%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0_%22%D0%9F%D1%8F%D1%82%D1%8B%D0%B9_%D1%8D%D0%BB%D0%B5%D0%BC%D0%B5%D0%BD%D1%82%22.jpg","Трудности перевода":"https://upload.wikimedia.org/wikipedia/ru/4/4c/Lost_in_Translation_poster.jpg"};
-// встроенные фильмы имеют постоянные id: d0, d1, ...
 const DEF = {}; const DEF_BY_TITLE = {};
 DEFAULT_FILMS.forEach(([title,year,genre],i)=>{ const f={id:"d"+i,title,year,genre,poster:POSTERS[title]||""}; DEF[f.id]=f; DEF_BY_TITLE[title.toLowerCase()]=f; });
 
-/* ---------- окружение ---------- */
+/* ---------- Telegram ---------- */
 const TG = (window.Telegram && Telegram.WebApp && Telegram.WebApp.initData) ? Telegram.WebApp : null;
 const CLOUD = TG && TG.isVersionAtLeast && TG.isVersionAtLeast("6.9") && TG.CloudStorage ? TG.CloudStorage : null;
-if(TG){
-  TG.ready(); TG.expand();
-  try{ TG.setHeaderColor("#0f0f14"); TG.setBackgroundColor("#0f0f14"); }catch(e){}
-  document.getElementById("backupTools").style.display="none";
-}
+if(TG){ TG.ready(); TG.expand(); try{ TG.setHeaderColor("#0f0f14"); TG.setBackgroundColor("#0f0f14"); }catch(e){} }
 function openLink(url){ if(TG) TG.openLink(url); else window.open(url,"_blank","noopener"); }
-function haptic(kind){ try{ if(!TG) return; if(kind==="tick") TG.HapticFeedback.selectionChanged(); else TG.HapticFeedback.notificationOccurred(kind); }catch(e){} }
+function haptic(kind){ try{ if(!TG) return; if(kind==="tick") TG.HapticFeedback.selectionChanged(); else if(kind==="light") TG.HapticFeedback.impactOccurred("light"); else TG.HapticFeedback.notificationOccurred(kind); }catch(e){} }
+
+/* ---------- звук (генерируется, без файлов) ---------- */
+const VOLUME = 0.35;            // общая громкость (0..1) — негромко
+let actx=null, master=null;
+function audio(){
+  if(!actx){ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return null; actx=new AC(); master=actx.createGain(); master.gain.value=VOLUME; master.connect(actx.destination); }
+  if(actx.state==="suspended") actx.resume();
+  return actx;
+}
+function soundOn(){ return !S || S.sound!==false; }
+function tone(freq,start,dur,type,peak){
+  const a=actx, o=a.createOscillator(), g=a.createGain();
+  o.type=type; o.frequency.setValueAtTime(freq,start);
+  g.gain.setValueAtTime(0.0001,start); g.gain.exponentialRampToValueAtTime(peak,start+0.008); g.gain.exponentialRampToValueAtTime(0.0001,start+dur);
+  o.connect(g); g.connect(master); o.start(start); o.stop(start+dur+0.02);
+}
+function playTick(speed){
+  if(!soundOn()||!audio()) return;
+  const t=actx.currentTime, f=1500+Math.min(speed,1)*500;
+  tone(f,t,0.035,"triangle",0.25); tone(f/2,t,0.025,"square",0.04);
+}
+function playWin(){
+  if(!soundOn()||!audio()) return;
+  const t=actx.currentTime+0.02;
+  [523.25,659.25,783.99,1046.5].forEach((f,i)=>{ tone(f,t+i*0.09,0.5,"triangle",0.22); tone(f*2,t+i*0.09,0.25,"sine",0.05); });
+  tone(1046.5,t+0.36,0.9,"sine",0.12); tone(1318.5,t+0.36,0.9,"sine",0.08);
+}
+function playStar(v){ if(!soundOn()||!audio()) return; tone(600+v*70,actx.currentTime,0.08,"sine",0.15); }
+function playDone(){ if(!soundOn()||!audio()) return; const t=actx.currentTime; tone(784,t,0.18,"triangle",0.18); tone(1175,t+0.1,0.35,"triangle",0.16); }
+document.addEventListener("pointerdown",()=>{ if(soundOn()) audio(); },{once:true});
 
 /* ---------- хранилище ---------- */
 const KEY="kino-na-den-v1";
 const $ = s => document.querySelector(s);
 const todayStr = () => { const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
+const fmtDate = s => s ? new Date(s+"T12:00:00").toLocaleDateString("ru-RU") : "";
 const uid = () => "u"+Math.random().toString(36).slice(2,10);
 const cloudCall=(fn,...a)=>new Promise((res,rej)=>CLOUD[fn](...a,(err,val)=>err?rej(err):res(val)));
 
+function slim(f){ const d=DEF[f.id]; if(d&&d.title===f.title&&(f.poster||"")===d.poster) return {id:f.id}; return {id:f.id,title:f.title,year:f.year,genre:f.genre,poster:f.poster||""}; }
 function compact(s){
-  const slim=f=>{ const d=DEF[f.id]; if(d&&d.title===f.title&&(f.poster||"")===d.poster) return {id:f.id}; return {id:f.id,title:f.title,year:f.year,genre:f.genre,poster:f.poster||""}; };
-  return {v:2,pool:s.pool.map(f=>{const o=slim(f);return o.title?o:o.id;}),
-    watched:s.watched.map(f=>({...slim(f),date:f.date,rating:f.rating||0})),day:s.day};
+  return {v:3,sound:s.sound,
+    pool:s.pool.map(f=>{const o=slim(f);return o.title?o:o.id;}),
+    watching:s.watching.map(f=>({...slim(f),start:f.start})),
+    watched:s.watched.map(f=>{const o={...slim(f),date:f.date,rating:f.rating||0}; if(f.start) o.start=f.start; if(f.review) o.review=f.review; return o;}),
+    day:s.day};
 }
 function expand(raw){
   const idMap={};
   const full=x=>{
     if(typeof x==="string") x={id:x};
     let f={...x};
-    if(DEF[f.id] && !f.title) f={...DEF[f.id],...f,title:DEF[f.id].title};
+    if(DEF[f.id]&&!f.title) f={...DEF[f.id],...f,title:DEF[f.id].title};
     if(!/^d\d+$/.test(f.id||"")){ const d=f.title&&DEF_BY_TITLE[f.title.toLowerCase()]; if(d){ idMap[f.id]=d.id; f.id=d.id; } }
     if(!f.id) f.id=uid();
-    const d=DEF[f.id];
-    if(d){ if(!f.poster) f.poster=d.poster; if(!f.year) f.year=d.year; if(!f.genre) f.genre=d.genre; }
+    const d=DEF[f.id]; if(d){ if(!f.poster) f.poster=d.poster; if(!f.year) f.year=d.year; if(!f.genre) f.genre=d.genre; }
     return f;
   };
-  const s={pool:(raw.pool||[]).map(full),watched:(raw.watched||[]).map(x=>{const f=full(x);f.rating=f.rating||0;return f;}),day:raw.day||null};
+  const s={sound:raw.sound!==false,
+    pool:(raw.pool||[]).map(full),
+    watching:(raw.watching||[]).map(full),
+    watched:(raw.watched||[]).map(x=>{const f=full(x);f.rating=f.rating||0;return f;}),
+    day:raw.day||null};
   if(s.day&&s.day.current&&idMap[s.day.current]) s.day.current=idMap[s.day.current];
   return s;
 }
-function freshState(){ return {pool:Object.values(DEF).map(f=>({...f})),watched:[],day:null}; }
+function freshState(){ return {sound:true,pool:Object.values(DEF).map(f=>({...f})),watching:[],watched:[],day:null}; }
+function newDay(){ return {date:todayStr(),current:null,rerollUsed:false,decided:false}; }
 
 async function loadState(){
   let raw=null;
   if(CLOUD){
     try{
       const n=parseInt(await cloudCall("getItem","n"))||0;
-      if(n){ const keys=[...Array(n).keys()].map(i=>"c"+i); const vals=await cloudCall("getItems",keys); raw=JSON.parse(keys.map(k=>vals[k]||"").join("")); }
+      if(n){ const keys=[...Array(n).keys()].map(i=>"c"+i); const vals=await cloudCall("getItems",keys); raw=JSON.parse(keys.map(k=>vals[k]||"").join("")); cloudPrevN=n; }
     }catch(e){ console.warn("cloud load",e); }
   }
   if(!raw){ try{ raw=JSON.parse(localStorage.getItem(KEY)); }catch(e){} }
-  let s=(raw&&Array.isArray(raw.pool))?expand(raw):freshState();
-  if(!s.day||s.day.date!==todayStr()) s.day={date:todayStr(),current:null,rerollUsed:false,decided:false};
+  const s=(raw&&Array.isArray(raw.pool))?expand(raw):freshState();
+  if(!s.day||s.day.date!==todayStr()) s.day=newDay();
   return s;
 }
 let cloudTimer=null, cloudPrevN=0;
@@ -340,7 +396,7 @@ function save(){
     clearTimeout(cloudTimer);
     cloudTimer=setTimeout(async()=>{
       try{
-        const parts=str.match(/[\s\S]{1,3800}/g)||[""];
+        const parts=str.match(/[\s\S]{1,1000}/g)||[""];   // 1000 символов: даже кириллица влезает в лимит 4 КБ
         for(let i=0;i<parts.length;i++) await cloudCall("setItem","c"+i,parts[i]);
         await cloudCall("setItem","n",String(parts.length));
         if(cloudPrevN>parts.length){ const extra=[]; for(let i=parts.length;i<cloudPrevN;i++) extra.push("c"+i); await cloudCall("removeItems",extra); }
@@ -364,11 +420,11 @@ const triedFix=new Set();
 window.posterFailed=function(img){
   const inModal=!!img.closest("#mPoster"); img.remove(); if(inModal) return;
   const id=img.dataset.fid, f=findFilm(id);
-  if(f && !triedFix.has(id)){ triedFix.add(id); queuePoster(f,true); }
+  if(f&&!triedFix.has(id)){ triedFix.add(id); queuePoster(f,true); }
 };
-function findFilm(id){ return S.pool.find(f=>f.id===id)||S.watched.find(f=>f.id===id)||(S.modalFilm&&S.modalFilm.id===id?S.modalFilm:null); }
+function allFilms(){ return S.pool.concat(S.watching,S.watched); }
+function findFilm(id){ return allFilms().find(f=>f.id===id); }
 
-// поиск постера в русской Википедии (без ключей)
 const WIKI="https://ru.wikipedia.org/w/api.php?origin=*&format=json&";
 const norm=s=>String(s).toLowerCase().replace(/ё/g,"е").replace(/[^a-zа-я0-9]/g,"");
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -377,15 +433,14 @@ async function lookupPoster(title,year){
   const d=await wj("action=query&list=search&srlimit=10&srsearch="+encodeURIComponent(title+(year?" "+year:"")+" фильм"));
   const res=(d.query&&d.query.search||[]).map(x=>x.title), k=norm(title);
   const base=x=>norm(x.replace(/\s*\(.*\)\s*$/,""));
-  let cands=res.filter(x=>base(x)===k);
-  cands.sort((a,b)=>score(b)-score(a));
-  function score(x){ let s=0; if(year&&x.includes(String(year))) s+=10; if(/\((фильм|мультфильм|аниме)/.test(x)) s+=3; if(!/\(/.test(x)) s+=2; if(/сериал|роман|книг|франшиз|значения/.test(x)) s-=20; return s; }
+  const score=x=>{ let s=0; if(year&&x.includes(String(year))) s+=10; if(/\((фильм|мультфильм|аниме)/.test(x)) s+=3; if(!/\(/.test(x)) s+=2; if(/сериал|роман|книг|франшиз|значения/.test(x)) s-=20; return s; };
+  let cands=res.filter(x=>base(x)===k).sort((a,b)=>score(b)-score(a));
   if(!cands.length) cands=res.filter(x=>/фильм|мультфильм/.test(x)&&base(x).startsWith(k.slice(0,6)));
   for(const page of cands.slice(0,4)){
     const p=Object.values((await wj("action=query&prop=revisions&rvprop=content&rvslots=main&rvsection=0&redirects=1&titles="+encodeURIComponent(page))).query.pages)[0];
     const txt=p.revisions?.[0]?.slots?.main?.["*"]||"";
     if(/\{\{\s*(неоднозначность|многозначность|disambig)/i.test(txt)) continue;
-    if(year && !txt.slice(0,4000).includes(String(year))) continue;
+    if(year&&!txt.slice(0,4000).includes(String(year))) continue;
     const m=txt.match(/\|\s*(Постер|Изображение|Обложка|image)\s*=\s*(?:\[\[(?:Файл|File|Изображение):)?([^\n|\]]+\.(?:jpe?g|png|gif|webp))/i);
     if(!m) continue;
     const ii=Object.values((await wj("action=query&prop=imageinfo&iiprop=url&iiurlwidth=400&titles="+encodeURIComponent("Файл:"+m[2].trim()))).query.pages)[0].imageinfo?.[0];
@@ -395,11 +450,8 @@ async function lookupPoster(title,year){
 }
 let pq=Promise.resolve();
 function queuePoster(f,force){
-  if(f.poster && !force) return;
-  pq=pq.then(async()=>{
-    try{ const url=await lookupPoster(f.title,f.year); if(url && url!==f.poster){ f.poster=url; save(); rerender(); } }
-    catch(e){ console.warn("poster",e); }
-  });
+  if(f.poster&&!force) return;
+  pq=pq.then(async()=>{ try{ const url=await lookupPoster(f.title,f.year); if(url&&url!==f.poster){ f.poster=url; save(); rerender(); } }catch(e){ console.warn("poster",e); } });
 }
 
 /* ---------- общее ---------- */
@@ -407,19 +459,30 @@ function meta(f){ return [f.year,f.genre].filter(Boolean).join(" · "); }
 function kp(t){ return "https://www.kinopoisk.ru/index.php?kp_query="+encodeURIComponent(t); }
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toast.t); toast.t=setTimeout(()=>t.classList.remove("show"),2400); }
 let currentView="spin";
-function rerender(){ if(currentView==="spin"){ if(!spinning) renderSpin(); } else if(currentView==="watched") renderWatched(); else renderPool(); }
+function updateBadge(){ $("#wgBadge").textContent=S.watching.length||""; }
+function rerender(){
+  updateBadge();
+  if(currentView==="spin"){ if(!spinning) renderSpin(); }
+  else if(currentView==="watching") renderWatching();
+  else if(currentView==="watched") renderWatched();
+  else renderPool();
+}
+function showView(v){
+  currentView=v;
+  document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));
+  document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id===v));
+  window.scrollTo(0,0); rerender();
+}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{ if(spinning&&b.dataset.view!=="spin"){ toast("Дождись, пока рулетка остановится"); return; } showView(b.dataset.view); });
+function setToday(){ $("#today").textContent=new Date().toLocaleDateString("ru-RU",{weekday:"long",day:"numeric",month:"long"}).replace(/^./,c=>c.toUpperCase()); }
+setToday();
 
-document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
-  currentView=b.dataset.view;
-  document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x===b));
-  document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===currentView));
-  rerender();
-});
-$("#today").textContent = new Date().toLocaleDateString("ru-RU",{weekday:"long",day:"numeric",month:"long"}).replace(/^./,c=>c.toUpperCase());
+function renderSoundBtn(){ $("#sndBtn").textContent=soundOn()?"🔊":"🔇"; }
+$("#sndBtn").onclick=()=>{ S.sound=!soundOn(); save(); renderSoundBtn(); if(S.sound){ audio(); playStar(5); } toast(S.sound?"Звук включён":"Звук выключен"); };
 
 /* ---------- рулетка ---------- */
 let spinning=false;
-const step=()=>{ const c=document.querySelector(".card"); return c? c.getBoundingClientRect().width+12 : 162; };
+const step=()=>{ const c=document.querySelector(".card"); return c?c.getBoundingClientRect().width+12:132; };
 const cardW=()=>step()-12;
 function cardHTML(f,win){ return `<div class="card poster${win?" win":""}" style="--g:${grad(f.title)}">${posterHTML(f)}<div class="cap"><div class="t">${esc(f.title)}</div><div class="y">${f.year||""}</div></div></div>`; }
 const rnd=a=>a[Math.floor(Math.random()*a.length)];
@@ -437,7 +500,8 @@ function idleStrip(center){
 function spin(excludeId){
   return new Promise(resolve=>{
     const candidates=S.pool.filter(f=>f.id!==excludeId);
-    if(!candidates.length){ toast("Фильмы закончились — добавь новые во вкладке «Все фильмы»"); return resolve(null); }
+    if(!candidates.length){ toast("Фильмы закончились — добавь новые во вкладке «Фильмы»"); return resolve(null); }
+    audio();
     const winner=rnd(candidates);
     const strip=$("#strip"), box=$(".roulette");
     const total=60, winIdx=52, items=[];
@@ -445,28 +509,36 @@ function spin(excludeId){
     items[winIdx]=winner;
     strip.style.transition="none";
     strip.innerHTML=items.map(f=>cardHTML(f,false)).join("");
-    const st=step(), cw=cardW();
-    strip.style.transform=`translateX(${box.clientWidth/2-(3*st+cw/2)}px)`;
+    const st=step(), cw=cardW(), half=box.clientWidth/2;
+    const startX=half-(3*st+cw/2);
+    strip.style.transform=`translateX(${startX}px)`;
     strip.offsetWidth;
     const jitter=(Math.random()-.5)*cw*0.7;
-    const endX=box.clientWidth/2-(winIdx*st+cw/2)+jitter;
+    const endX=half-(winIdx*st+cw/2)+jitter;
     strip.style.transition="transform 5.5s cubic-bezier(.12,.75,.12,1)";
     strip.style.transform=`translateX(${endX}px)`;
     spinning=true;
-    // лёгкая вибрация в Telegram во время прокрутки
-    let ticks=0; const tk=setInterval(()=>{ if(++ticks>18) clearInterval(tk); else haptic("tick"); },120+ticks*10);
+    // щелчок каждый раз, когда под стрелкой проезжает новая карточка
+    let last=null, lastT=performance.now(), raf=0;
+    const loop=now=>{
+      const x=new DOMMatrixReadOnly(getComputedStyle(strip).transform).m41;
+      const idx=Math.floor((half-x+6)/st);
+      if(last!==null&&idx!==last){ const dt=now-lastT; lastT=now; playTick(Math.max(0,1-dt/250)); haptic("tick"); }
+      last=idx;
+      if(spinning) raf=requestAnimationFrame(loop);
+    };
+    raf=requestAnimationFrame(loop);
     setTimeout(()=>{
-      clearInterval(tk);
+      spinning=false; cancelAnimationFrame(raf);
       strip.style.transition="transform .35s ease-out";
-      strip.style.transform=`translateX(${box.clientWidth/2-(winIdx*st+cw/2)}px)`;
+      strip.style.transform=`translateX(${half-(winIdx*st+cw/2)}px)`;
       strip.children[winIdx].classList.add("win");
-      spinning=false; haptic("success"); resolve(winner);
+      playWin(); haptic("success"); resolve(winner);
     },5600);
   });
 }
 
-function currentFilm(){ return S.pool.find(f=>f.id===S.day.current)||S.watched.find(f=>f.id===S.day.current); }
-
+function currentFilm(){ return findFilm(S.day.current); }
 function renderSpin(){
   const d=S.day, f=currentFilm();
   $("#spinWrap").style.display="none"; $("#result").classList.remove("show"); $("#done").classList.remove("show");
@@ -475,9 +547,8 @@ function renderSpin(){
     fillPoster($("#dPoster"),f); $("#dTitle").textContent=f.title; $("#dMeta").textContent=meta(f);
     $("#dSearch").onclick=()=>openLink(kp(f.title));
     idleStrip(f);
-  } else if(f){
-    showResult(f); idleStrip(f);
-  } else {
+  } else if(f){ showResult(f); idleStrip(f); }
+  else {
     $("#spinWrap").style.display="block";
     $("#spinBtn").disabled=!S.pool.length;
     $("#spinBtn").textContent=S.pool.length?"КРУТИТЬ":"НЕТ ФИЛЬМОВ";
@@ -492,7 +563,6 @@ function showResult(f){
   $("#skipBtn").disabled=S.day.rerollUsed||S.pool.length<2;
   $("#hint").textContent=S.day.rerollUsed?"Перекрутка на сегодня уже использована — либо смотрим, либо до завтра 🙂":"Перекрутить можно 1 раз в день";
 }
-
 $("#spinBtn").onclick=async()=>{
   if(spinning||S.day.current) return;
   $("#spinBtn").disabled=true;
@@ -514,14 +584,79 @@ $("#watchBtn").onclick=()=>{
   if(spinning) return;
   const i=S.pool.findIndex(f=>f.id===S.day.current); if(i<0) return;
   const [f]=S.pool.splice(i,1);
-  S.watched.push({...f,date:todayStr(),rating:0});
-  S.day.decided=true; save();
-  toast("Добавлено в «Просмотрено»"); renderSpin();
+  S.watching.push({...f,start:todayStr()});
+  S.day.decided=true; save(); playDone(); haptic("light");
+  toast("Добавлено в «Смотрю»"); rerender();
 };
+$("#goWatching").onclick=()=>showView("watching");
+
+/* ---------- смотрю ---------- */
+function thumbHTML(f){ return `<div class="thumb poster" data-edit="${esc(f.id)}" style="--g:${grad(f.title)}">${posterHTML(f)}</div>`; }
+function renderWatching(){
+  $("#wgCount").textContent=S.watching.length?`${S.watching.length} фильм(ов) в процессе`:"";
+  $("#wgList").innerHTML=S.watching.length?[...S.watching].reverse().map(f=>`
+    <div class="item">${thumbHTML(f)}
+      <div class="info"><div class="n">${esc(f.title)}</div>
+        <div class="s">${esc(meta(f))}</div>
+        <div class="s">смотрю с ${fmtDate(f.start)}</div>
+        <a class="link" data-kp="${esc(f.id)}" style="font-size:12px;margin-top:4px">Кинопоиск ↗</a></div>
+      <button class="done-btn" data-done="${esc(f.id)}">Посмотрел</button>
+      <button class="x" data-back="${esc(f.id)}" title="Вернуть в рулетку">↩</button>
+    </div>`).join(""):`<div class="empty-msg">Сейчас ничего не смотришь.<br>Крути рулетку и жми «Смотреть»!</div>`;
+}
+$("#wgList").addEventListener("click",e=>{
+  const d=e.target.closest("[data-done]"); if(d){ openRate(d.dataset.done,"finish"); return; }
+  const k=e.target.closest("[data-kp]"); if(k){ openLink(kp(findFilm(k.dataset.kp).title)); return; }
+  const t=e.target.closest("[data-edit]"); if(t){ openModal(t.dataset.edit); return; }
+  const b=e.target.closest("[data-back]");
+  if(b){ const i=S.watching.findIndex(x=>x.id===b.dataset.back); const [f]=S.watching.splice(i,1); delete f.start; S.pool.push(f); save(); rerender(); toast("Фильм возвращён в рулетку"); }
+});
+
+/* ---------- оценка и отзыв ---------- */
+let rt={film:null,mode:"finish",rating:0};
+function rtStarsRender(v){ document.querySelectorAll("#rtStars .star").forEach(s=>s.classList.toggle("on",+s.dataset.v<=v)); }
+(function(){ let h=""; for(let i=1;i<=10;i++) h+=`<button class="star" data-v="${i}">★</button>`; $("#rtStars").innerHTML=h; })();
+function openRate(id,mode){
+  const f=findFilm(id); if(!f) return;
+  rt={film:f,mode,rating:mode==="finish"?0:(f.rating||0)};
+  fillPoster($("#rtPoster"),f); $("#rtTitle").textContent=f.title;
+  $("#rtSub").textContent=mode==="finish"?"Как тебе фильм?":"Изменить отзыв";
+  rtStarsRender(rt.rating); setRateVal();
+  const toStep2=mode==="review";
+  $("#step1").style.display=toStep2?"none":"block"; $("#step2").style.display=toStep2?"block":"none";
+  $("#rtText").value=f.review||""; updChars();
+  if(toStep2) $("#rtVal2").innerHTML=rt.rating?`Твоя оценка: <b>${rt.rating}/10</b>`:"";
+  $("#rateModal").classList.add("show");
+}
+function setRateVal(){ $("#rtVal").innerHTML=rt.rating?`Оценка: <b>${rt.rating}/10</b>`:"Выбери от 1 до 10 звёзд"; $("#rtRate").disabled=!rt.rating; }
+$("#rtStars").addEventListener("click",e=>{ const s=e.target.closest(".star"); if(!s) return; rt.rating=+s.dataset.v; rtStarsRender(rt.rating); setRateVal(); playStar(rt.rating); haptic("tick"); });
+$("#rtStars").addEventListener("mouseover",e=>{ const s=e.target.closest(".star"); if(s) rtStarsRender(+s.dataset.v); });
+$("#rtStars").addEventListener("mouseleave",()=>rtStarsRender(rt.rating));
+$("#rtCancel").onclick=()=>$("#rateModal").classList.remove("show");
+$("#rtRate").onclick=()=>{
+  if(!rt.rating) return;
+  if(rt.mode==="finish"){
+    // фильм уходит из «Смотрю» в «Просмотрено» с оценкой
+    const i=S.watching.findIndex(x=>x.id===rt.film.id);
+    if(i>=0){ const [f]=S.watching.splice(i,1); f.rating=rt.rating; f.date=todayStr(); f.review=""; S.watched.push(f); rt.film=f; }
+  } else { rt.film.rating=rt.rating; }
+  save(); rerender(); haptic("success");
+  $("#step1").style.display="none"; $("#step2").style.display="block";
+  $("#rtVal2").innerHTML=`Твоя оценка: <b>${rt.rating}/10</b> · теперь отзыв`;
+  setTimeout(()=>$("#rtText").focus(),50);
+};
+function updChars(){ $("#rtChars").textContent=`${$("#rtText").value.length} / 1000`; }
+$("#rtText").oninput=updChars;
+function finishReview(text){
+  rt.film.review=text.trim(); save();
+  $("#rateModal").classList.remove("show");
+  if(rt.mode==="finish"){ playDone(); toast("Перенесено в «Просмотрено»"); showView("watched"); } else rerender();
+}
+$("#rtSave").onclick=()=>finishReview($("#rtText").value);
+$("#rtSkip").onclick=()=>finishReview(rt.mode==="finish"?"":(rt.film.review||""));
 
 /* ---------- просмотрено ---------- */
-function starsHTML(f){ let h=""; for(let i=1;i<=10;i++) h+=`<button class="star${i<=f.rating?" on":""}" data-id="${esc(f.id)}" data-v="${i}" title="${i} из 10">★</button>`; return h; }
-function thumbHTML(f){ return `<div class="thumb poster" data-edit="${esc(f.id)}" style="--g:${grad(f.title)}" title="Поменять постер">${posterHTML(f)}</div>`; }
+function starsHTML(f){ let h=""; for(let i=1;i<=10;i++) h+=`<button class="star${i<=f.rating?" on":""}" data-id="${esc(f.id)}" data-v="${i}">★</button>`; return h; }
 function renderWatched(){
   const sort=$("#wSort").value; let arr=[...S.watched];
   if(sort==="date") arr.reverse();
@@ -531,24 +666,21 @@ function renderWatched(){
   const avg=rated.length?(rated.reduce((s,f)=>s+f.rating,0)/rated.length).toFixed(1):null;
   $("#wCount").textContent=`${S.watched.length} фильм(ов)`+(avg?` · средняя оценка ${avg}`:"");
   $("#wList").innerHTML=arr.length?arr.map(f=>`
-    <div class="item">${thumbHTML(f)}
+    <div class="item top-al">${thumbHTML(f)}
       <div class="info"><div class="n">${esc(f.title)}</div>
-        <div class="s">${esc(meta(f))} · ${new Date(f.date).toLocaleDateString("ru-RU")}</div>
-        <div class="stars">${starsHTML(f)}</div></div>
-      <div class="score${f.rating?"":" none"}">${f.rating?f.rating+"/10":"без оценки"}</div>
-      <button class="x" data-back="${esc(f.id)}" title="Вернуть в рулетку">↩</button>
-    </div>`).join(""):`<div class="empty">Пока пусто. Крути рулетку и жми «Смотреть»!</div>`;
+        <div class="s">${esc(meta(f))} · ${fmtDate(f.date)}</div>
+        <div class="stars">${starsHTML(f)}</div>
+        <div class="review${f.review?"":" empty"}" data-review="${esc(f.id)}">${f.review?esc(f.review):"✎ Добавить отзыв"}</div></div>
+      <div class="score${f.rating?"":" none"}">${f.rating?f.rating+"/10":"—"}</div>
+    </div>`).join(""):`<div class="empty-msg">Пока пусто. Досмотри фильм из «Смотрю» и нажми «Посмотрел».</div>`;
 }
 $("#wSort").onchange=renderWatched;
 $("#wList").addEventListener("click",e=>{
   const s=e.target.closest(".star");
-  if(s){ const f=S.watched.find(x=>x.id===s.dataset.id); const v=+s.dataset.v; f.rating=(f.rating===v?0:v); save(); haptic("tick"); renderWatched(); return; }
-  const b=e.target.closest("[data-back]");
-  if(b){ const i=S.watched.findIndex(x=>x.id===b.dataset.back); const [f]=S.watched.splice(i,1); delete f.date; delete f.rating; S.pool.push(f); save(); renderWatched(); toast("Фильм возвращён в рулетку"); return; }
+  if(s){ const f=S.watched.find(x=>x.id===s.dataset.id); f.rating=+s.dataset.v; save(); playStar(f.rating); haptic("tick"); renderWatched(); return; }
+  const r=e.target.closest("[data-review]"); if(r){ openRate(r.dataset.review,"review"); return; }
   const t=e.target.closest("[data-edit]"); if(t) openModal(t.dataset.edit);
 });
-$("#wList").addEventListener("mouseover",e=>{ const s=e.target.closest(".star"); if(!s) return; const v=+s.dataset.v; s.parentElement.querySelectorAll(".star").forEach(x=>x.classList.toggle("on",+x.dataset.v<=v)); });
-$("#wList").addEventListener("mouseout",e=>{ const box=e.target.closest(".stars"); if(!box||box.contains(e.relatedTarget)) return; const f=S.watched.find(x=>x.id===box.querySelector(".star").dataset.id); box.querySelectorAll(".star").forEach(x=>x.classList.toggle("on",+x.dataset.v<=f.rating)); });
 
 /* ---------- все фильмы ---------- */
 function renderPool(){
@@ -559,7 +691,7 @@ function renderPool(){
     <div class="item">${thumbHTML(f)}
       <div class="info"><div class="n">${esc(f.title)}</div><div class="s">${esc(meta(f))}</div></div>
       <button class="x" data-del="${esc(f.id)}" title="Убрать из рулетки">✕</button>
-    </div>`).join(""):`<div class="empty">Ничего не найдено</div>`;
+    </div>`).join(""):`<div class="empty-msg">Ничего не найдено</div>`;
 }
 $("#pFilter").oninput=renderPool;
 $("#pList").addEventListener("click",e=>{
@@ -571,7 +703,7 @@ $("#pList").addEventListener("click",e=>{
 function addFilm(){
   const title=$("#addTitle").value.trim(); if(!title){ $("#addTitle").focus(); return; }
   const year=parseInt($("#addYear").value)||""; const genre=$("#addGenre").value.trim();
-  if(S.pool.concat(S.watched).some(f=>f.title.toLowerCase()===title.toLowerCase())){ toast("Такой фильм уже есть"); return; }
+  if(allFilms().some(f=>f.title.toLowerCase()===title.toLowerCase())){ toast("Такой фильм уже есть"); return; }
   const d=DEF_BY_TITLE[title.toLowerCase()];
   const f=d?{...d}:{id:uid(),title,year,genre,poster:""};
   S.pool.push(f); save();
@@ -585,13 +717,8 @@ $("#addBtn").onclick=addFilm;
 /* ---------- модалка постера ---------- */
 let mFilm=null, mUrl="";
 function mPreview(){ fillPoster($("#mPoster"),{...mFilm,poster:mUrl}); }
-function openModal(id){
-  mFilm=findFilm(id); if(!mFilm) return;
-  S.modalFilm=mFilm; mUrl=mFilm.poster||"";
-  $("#mTitle").textContent=mFilm.title; $("#mUrl").value=mUrl; mPreview();
-  $("#modal").classList.add("show");
-}
-function closeModal(){ $("#modal").classList.remove("show"); S.modalFilm=null; mFilm=null; }
+function openModal(id){ mFilm=findFilm(id); if(!mFilm) return; mUrl=mFilm.poster||""; $("#mTitle").textContent=mFilm.title; $("#mUrl").value=mUrl; mPreview(); $("#modal").classList.add("show"); }
+function closeModal(){ $("#modal").classList.remove("show"); mFilm=null; }
 $("#mCancel").onclick=closeModal;
 $("#modal").onclick=e=>{ if(e.target.id==="modal") closeModal(); };
 $("#mUrl").oninput=()=>{ mUrl=$("#mUrl").value.trim(); mPreview(); };
@@ -604,32 +731,13 @@ $("#mAuto").onclick=async()=>{
 };
 $("#mSave").onclick=()=>{ mFilm.poster=mUrl; save(); closeModal(); rerender(); };
 
-/* ---------- резервная копия ---------- */
-$("#exportBtn").onclick=()=>{
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(new Blob([JSON.stringify(compact(S),null,1)],{type:"application/json"}));
-  a.download=`kino-backup-${todayStr()}.json`; document.body.appendChild(a); a.click(); a.remove();
-};
-$("#importBtn").onclick=()=>$("#importFile").click();
-$("#importFile").onchange=async e=>{
-  const file=e.target.files[0]; if(!file) return;
-  try{
-    const d=JSON.parse(await file.text()); if(!Array.isArray(d.pool)||!Array.isArray(d.watched)) throw 0;
-    S=expand(d); if(!S.day||S.day.date!==todayStr()) S.day={date:todayStr(),current:null,rerollUsed:false,decided:false};
-    save(); rerender(); toast("Копия загружена");
-  }catch(err){ toast("Не получилось прочитать файл"); }
-  e.target.value="";
-};
-
 window.addEventListener("resize",()=>{ if(!spinning&&currentView==="spin") renderSpin(); });
 
 /* ---------- старт ---------- */
 (async()=>{
-  S=await loadState(); save(); renderSpin();
-  // постеры для своих фильмов, у которых их ещё нет
-  S.pool.concat(S.watched).filter(f=>!f.poster&&!DEF[f.id]).slice(0,30).forEach(f=>queuePoster(f));
-  // новый день наступил, пока приложение открыто
-  setInterval(()=>{ if(S.day.date!==todayStr()&&!spinning){ S.day={date:todayStr(),current:null,rerollUsed:false,decided:false}; save(); $("#today").textContent=new Date().toLocaleDateString("ru-RU",{weekday:"long",day:"numeric",month:"long"}).replace(/^./,c=>c.toUpperCase()); rerender(); } },60000);
+  S=await loadState(); save(); renderSoundBtn(); updateBadge(); renderSpin();
+  allFilms().filter(f=>!f.poster&&!DEF[f.id]).slice(0,30).forEach(f=>queuePoster(f));
+  setInterval(()=>{ if(S.day.date!==todayStr()&&!spinning){ S.day=newDay(); save(); setToday(); rerender(); } },60000);
 })();
 </script>
 </body>
